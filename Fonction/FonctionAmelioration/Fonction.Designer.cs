@@ -34,6 +34,9 @@ namespace FonctionAmelioration
             this.txtBoxEquation = new System.Windows.Forms.TextBox();
             this.txtBoxFct2 = new System.Windows.Forms.TextBox();
             this.picGraph = new System.Windows.Forms.PictureBox();
+            this.lblCheckBoxParam = new System.Windows.Forms.Label();
+            this.lblFctUn = new System.Windows.Forms.Label();
+            this.lblFct2 = new System.Windows.Forms.Label();
             this.chkBParametrique = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picGraph)).BeginInit();
             this.SuspendLayout();
@@ -70,11 +73,41 @@ namespace FonctionAmelioration
             this.picGraph.TabStop = false;
             this.picGraph.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picGraph_MouseMove);
             // 
+            // lblCheckBoxParam
+            // 
+            this.lblCheckBoxParam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCheckBoxParam.AutoSize = true;
+            this.lblCheckBoxParam.Location = new System.Drawing.Point(659, 870);
+            this.lblCheckBoxParam.Name = "lblCheckBoxParam";
+            this.lblCheckBoxParam.Size = new System.Drawing.Size(113, 13);
+            this.lblCheckBoxParam.TabIndex = 5;
+            this.lblCheckBoxParam.Text = "Fonction Paramètrique";
+            // 
+            // lblFctUn
+            // 
+            this.lblFctUn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFctUn.AutoSize = true;
+            this.lblFctUn.Location = new System.Drawing.Point(804, 868);
+            this.lblFctUn.Name = "lblFctUn";
+            this.lblFctUn.Size = new System.Drawing.Size(75, 13);
+            this.lblFctUn.TabIndex = 6;
+            this.lblFctUn.Text = "Fonction 1 / X";
+            // 
+            // lblFct2
+            // 
+            this.lblFct2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFct2.AutoSize = true;
+            this.lblFct2.Location = new System.Drawing.Point(804, 896);
+            this.lblFct2.Name = "lblFct2";
+            this.lblFct2.Size = new System.Drawing.Size(75, 13);
+            this.lblFct2.TabIndex = 7;
+            this.lblFct2.Text = "Fonction 2 / Y";
+            // 
             // chkBParametrique
             // 
             this.chkBParametrique.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chkBParametrique.AutoSize = true;
-            this.chkBParametrique.Location = new System.Drawing.Point(862, 896);
+            this.chkBParametrique.Location = new System.Drawing.Point(778, 870);
             this.chkBParametrique.Name = "chkBParametrique";
             this.chkBParametrique.Size = new System.Drawing.Size(15, 14);
             this.chkBParametrique.TabIndex = 4;
@@ -85,6 +118,9 @@ namespace FonctionAmelioration
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 919);
+            this.Controls.Add(this.lblFct2);
+            this.Controls.Add(this.lblFctUn);
+            this.Controls.Add(this.lblCheckBoxParam);
             this.Controls.Add(this.chkBParametrique);
             this.Controls.Add(this.picGraph);
             this.Controls.Add(this.txtBoxFct2);
@@ -103,6 +139,9 @@ namespace FonctionAmelioration
         private System.Windows.Forms.TextBox txtBoxEquation;
         private System.Windows.Forms.TextBox txtBoxFct2;
         private System.Windows.Forms.PictureBox picGraph;
+        private Label lblCheckBoxParam;
+        private Label lblFctUn;
+        private Label lblFct2;
         private CheckBox chkBParametrique;
     }
 }
