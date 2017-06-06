@@ -22,6 +22,11 @@ namespace FonctionAmelioration
         private double xmax;
         private double ymin;
         private double ymax;
+        double newXminAFF;
+        double newXmaxAFF;
+        double newYminAFF;
+        double newYmaxAFF;
+        Graphics gr;     
 
         private string xZoomMin = "-5";
         private string xZoomMax = "5";
@@ -40,12 +45,17 @@ namespace FonctionAmelioration
             txtBoxFct2.BringToFront();
             this.MouseWheel += Fonction_MouseWheel;
             zoomSacle = Convert.ToInt32(Math.Round(Convert.ToDouble(yZoomMin)));
+            newXminAFF = Convert.ToDouble(xZoomMin);
+            newXmaxAFF = Convert.ToDouble(xZoomMax);
+            newYminAFF = Convert.ToDouble(yZoomMin);
+            newYmaxAFF = Convert.ToDouble(yZoomMax);
         }
 
         private void Fonction_MouseWheel(object sender, MouseEventArgs e)
         {
+            
             zoomSacle += (float)((e.Delta / 120));
-          
+
             this.Text = zoomSacle.ToString();
             #region //Zoom
             if (zoomSacle >= 0)
@@ -63,124 +73,103 @@ namespace FonctionAmelioration
                 yZoomMin = (zoomSacle).ToString();
                 yZoomMax = (-1 * zoomSacle).ToString();
             }
+
+            newXminAFF = e.X * dx + xmin;
+            newXmaxAFF = e.X * dx + xmax;
+            newYminAFF = e.Y * dy + ymin;
+            newYmaxAFF = e.Y * dy + ymax;
             #endregion
             Invalidate();
             Update();
         }
 
-        private void GraphiqueXY()
-        {
-            pointsGraphiqueX = DessinGraphique.DessinX(xmin, xmax, dx);
-            pointsGraphiqueY = DessinGraphique.DessinY(ymin, ymax, dx);
-        }
-
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             picGraph.Refresh();
-                // code trouvé sur : http://csharphelper.com/blog/2015/06/graph-the-sine-cosine-and-tangent-functions-in-c/ 
-                if (GraphImage != null)
-                    GraphImage.Dispose();
-                GraphImage = new Bitmap(picGraph.ClientSize.Width, picGraph.ClientSize.Height);
-
-                Graphics gr;
-                gr = Graphics.FromImage(GraphImage);
-                gr.Clear(Color.White);
-                gr.SmoothingMode = SmoothingMode.HighQuality;
+            // code trouvé sur : http://csharphelper.com/blog/2015/06/graph-the-sine-cosine-and-tangent-functions-in-c/ 
+            if (GraphImage != null)
+                GraphImage.Dispose();
+            GraphImage = new Bitmap(picGraph.ClientSize.Width, picGraph.ClientSize.Height);
 
 
-                // Remplacer par une vrai constante (ici 3) 21:9 ou 16:9 le rapport dépend de l'écran
-                xmin = double.Parse(xZoomMin);
-                xmax = double.Parse(xZoomMax);
-                ymin = double.Parse(yZoomMin);
-                ymax = double.Parse(yZoomMax);
+            gr = Graphics.FromImage(GraphImage);
+            gr.Clear(Color.White);
+            gr.SmoothingMode = SmoothingMode.HighQuality;
+        
+            // Remplacer par une vrai constante (ici 3) 21:9 ou 16:9 le rapport dépend de l'écran
+            xmin = double.Parse(xZoomMin);
+            xmax = double.Parse(xZoomMax);
+            ymin = double.Parse(yZoomMin);
+            ymax = double.Parse(yZoomMax);
+            float world_width  = (float) Math.Abs(newXmaxAFF - newXminAFF);
+            float world_height = (float) Math.Abs(newYmaxAFF - newYminAFF);
 
-                // Scale to make the area fit the PictureBox.
-                RectangleF world_coords = new RectangleF(
-                    (float)xmin, (float)ymax,
-                    (float)(xmax - xmin),
-                    (float)(ymin - ymax));
-
-                PointF[] device_coords =
-                {
+            // Scale to make the area fit the PictureBox.
+            RectangleF world_coords = new RectangleF(
+                (float)newXminAFF, (float)newXminAFF, world_width, world_height);
+            
+            PointF[] device_coords =
+            {
                         new PointF(0, 0),
                         new PointF(picGraph.ClientSize.Width, 0),
-                        new PointF(0, picGraph.ClientSize.Height),
+                        new PointF(0, picGraph.ClientSize.Height)
                     };
-                // Matrice de points proportionnelle au nombre de pixels affichés
-                gr.Transform = new Matrix(world_coords, device_coords);
 
+            // Matrice de points proportionnelle au nombre de pixels affichés
+            gr.Transform = new Matrix(world_coords, device_coords);
+            Graphique.DessinGraphique(gr, xmin, xmax, ymin, ymax);
 
-                // See how big a pixel is before scaling.
-                Matrix inverse = gr.Transform;
-                inverse.Invert();
-                PointF[] pixel_pts =
-                {
-                        new PointF(0, 0),
-                        new PointF(1, 0),
-                };
+            // See how big a pixel is before scaling.
+            Matrix inverse = gr.Transform;
+            inverse.Invert();
 
-                // Echantillonner en fonction de la taille de la fenetre affichée 
-                // Par exemple sur un écran 4K en plein écran, on aura 3800 pixels calculés
-                inverse.TransformPoints(pixel_pts);
+            PointF[] pixel_pts =
+            {
+                    new PointF(0, 1),
+                    new PointF(1, 0),
+            };
 
-                // Distance qui sépare deux pixels à l'écran en largeur
-                dx = (pixel_pts[1].X - pixel_pts[0].X);
-                // Utile en coordonnées paramétrique (x=cos(t,dx), y=sin(t,dy))
-                dy = (pixel_pts[1].Y - pixel_pts[0].Y);
+            // Echantillonner en fonction de la taille de la fenetre affichée 
+            // Par exemple sur un écran 4K en plein écran, on aura 3800 pixels calculés
 
+            inverse.TransformPoints(pixel_pts);
 
-                GraphiqueXY();
+            // Distance qui sépare deux pixels à l'écran en largeur
+            dx = Math.Abs(pixel_pts[1].X - pixel_pts[0].X);
+            // Utile en coordonnées paramétrique (x=cos(t,dx), y=sin(t,dy))
+            dy = Math.Abs(pixel_pts[1].Y - pixel_pts[0].Y);
 
-                Pen penGrad = new Pen(Color.Black, 0);
-                Graduation grad = new Graduation(xmin, xmax, dx, ymin, ymax, zoomSacle);
-                int y = Convert.ToInt32(ymin);
-                System.Drawing.Font drawFont = new System.Drawing.Font("Arial", 30);
-                foreach (var lists in grad.ListCordGradY)
-                {
-                    y++;
-                    gr.DrawString(y.ToString(), drawFont, Brushes.Black, new Point(10,20));
-                    if (lists.Count > 1)
-                        gr.DrawLines(penGrad, lists.ToArray());
-                }
-                int x = Convert.ToInt32(xmin);
-                foreach (var lists in grad.ListCordGradX)
-                {
-                    if (lists.Count > 1)
-                        gr.DrawLines(penGrad, lists.ToArray());
-                    
-                }
+            Calcul();
 
-                Calcul();
+            Pen pen = new Pen(Color.Black, 0);
+            Pen penfct = new Pen(Color.Purple, 0.005f);
+            Pen penfct2 = new Pen(Color.SteelBlue, 0.005f);
 
-                Pen pen = new Pen(Color.Black, 0);
-                Pen penfct = new Pen(Color.Purple, 0.005f);
-                Pen penfct2 = new Pen(Color.SteelBlue, 0.005f);
+            Dessin(gr, penfct, pointsXY);
+            Dessin(gr, penfct2, pointsXYFct2);
 
-                Dessin(gr, penfct, pointsXY);
-                Dessin(gr, penfct2, pointsXYFct2);
+            //gr.DrawLines(pen, pointsGraphiqueX.ToArray());
+            //gr.DrawLines(pen, pointsGraphiqueY.ToArray());
+            DoubleBuffered = true;
+            gr.Dispose();
+            // Display the result.
+            picGraph.Image = GraphImage;
 
-                gr.DrawLines(pen, pointsGraphiqueX.ToArray());
-                gr.DrawLines(pen, pointsGraphiqueY.ToArray());
-                DoubleBuffered = true;
-                gr.Dispose();
-                // Display the result.
-                picGraph.Image = GraphImage;
         }
 
-        private void Dessin(Graphics gr, Pen penfct, List<PointF> points )
+        private void Dessin(Graphics gr, Pen penfct, List<PointF> points)
         {
             if (points.Count > 0)
             {
                 List<List<PointF>> lstDeLst = new List<List<PointF>>();
                 List<PointF> lstTmp = new List<PointF>();
-
                 foreach (var item in points)
                 {
                     //Regarde la difference entre le point actuelle et l'ancien
-                    if ((Math.Abs(item.Y) > (ymax)) || (Math.Abs(item.Y) < (ymin)))
+                    if ((Math.Abs(item.Y) > (ymax+9.95)) || (Math.Abs(item.Y) < (ymin-9.95)))
                     {
-                            lstDeLst.Add(lstTmp);
-                            lstTmp = new List<PointF>();
+                        lstDeLst.Add(lstTmp);
+                        lstTmp = new List<PointF>();
                     }
                     lstTmp.Add(item);
                 }
@@ -214,21 +203,14 @@ namespace FonctionAmelioration
                 if (chkBParametrique.Checked)
                 {
                     Calcul fonctionParametrique = new Calcul(TraitementTexte.equation(txtBoxEquation.Text), TraitementTexte.equation(txtBoxFct2.Text));
-                    pointsXY = fonctionParametrique.PointXYEquationParametrique(xmin, xmax, dx);
+                    pointsXY = fonctionParametrique.PointXYEquationParametrique(xmin, xmax, dx ,dy);
                 }
                 else
                 {
-                    if (txtBoxEquation.Text != "")
-                    {
                         Calcul fonctionNumeroUne = new Calcul(TraitementTexte.equation(txtBoxEquation.Text));
-                        pointsXY = fonctionNumeroUne.PointXYEquation(xmin, xmax, dx, this);
-                    }
-
-                    if (txtBoxFct2.Text != "")
-                    {
+                        pointsXY = fonctionNumeroUne.PointXYEquation(xmin - 10, xmax + 10, dx, this);
                         Calcul fonctionNumeroDeux = new Calcul(TraitementTexte.equation(txtBoxFct2.Text));
-                        pointsXYFct2 = fonctionNumeroDeux.PointXYEquation(xmin, xmax, dx, this);
-                    }
+                        pointsXYFct2 = fonctionNumeroDeux.PointXYEquation(xmin - 10, xmax + 10, dx, this);
                 }
             }
             catch
@@ -239,7 +221,7 @@ namespace FonctionAmelioration
 
         private void picGraph_MouseMove(object sender, MouseEventArgs e)
         {
-
+            this.Text = (e.X * dx + xmin +" "+ e.Y*dy + ymin).ToString();
         }
     }
 }

@@ -51,14 +51,14 @@ namespace FonctionAmelioration
 
                 if (!(double.IsNaN(y)) && (y < float.MaxValue) && (y > float.MinValue) && (y != 0))
                 {
-                    XY.Add(new PointF(x, y));
+                    XY.Add(new PointF(x, -y));
                 }
 
             }
             return XY;
         }
 
-        public List<PointF> PointXYEquationParametrique(double ymin, double ymax, float dx)
+        public List<PointF> PointXYEquationParametrique(double ymin, double ymax, float dx, float dy)
         {
             List<PointF> XY = new List<PointF>();
             for (float t = (float)ymin; t < ymax; t += dx)
@@ -68,25 +68,13 @@ namespace FonctionAmelioration
 
                 if (!(double.IsNaN(y)) && (y < float.MaxValue) && (y > float.MinValue) && (y != 0) && !(double.IsNaN(x)) && (x < float.MaxValue) && (x > float.MinValue) && (x != 0))
                 {
-                    XY.Add(new PointF(x, y));
+                    XY.Add(new PointF(x, -y));
                 }
             }
+
+            
             return XY;
         }
-
-        //Code utilisé avec l'ancienne libraire : Eval.Execute(formula).ToString(); http://csharp-eval.com/HowTo.php
-        //public float XOfEquationParametrique(float x)
-        //{
-        //    return Convert.ToSingle(remplaceX(_equation, x));
-        //}
-
-        //private string remplaceX(string equation, double x)
-        //{
-        //    if (equation.Contains("x"))
-        //        return remplaceX(equation.Replace("x", x.ToString()),x);
-        //    else
-        //        return Calculate(equation);
-        //}
 
 
         /// <summary>
