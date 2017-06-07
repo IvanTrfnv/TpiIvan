@@ -116,6 +116,7 @@ namespace FonctionAmelioration
             this.chkBParametrique.Size = new System.Drawing.Size(15, 14);
             this.chkBParametrique.TabIndex = 4;
             this.chkBParametrique.UseVisualStyleBackColor = true;
+            this.chkBParametrique.CheckedChanged += new System.EventHandler(this.chkBParametrique_CheckedChanged);
             // 
             // label1
             // 

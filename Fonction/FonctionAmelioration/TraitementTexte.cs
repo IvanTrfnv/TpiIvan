@@ -37,9 +37,7 @@ namespace FonctionAmelioration
                                 }
                             }
                     }
-
                 }
-
             }
             if (equationUtilisateur == "")
                 equationUtilisateur = "0";

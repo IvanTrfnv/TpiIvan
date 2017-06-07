@@ -113,7 +113,6 @@ namespace FonctionAmelioration
 
             Graphique.DessinGraphique(gr, xmin, xmax, ymin, ymax);
 
-            // See how big a pixel is before scaling.
             Matrix inverse = gr.Transform;
             inverse.Invert();
 
@@ -121,7 +120,6 @@ namespace FonctionAmelioration
 
             // Echantillonner en fonction de la taille de la fenetre affichée 
             // Par exemple sur un écran 4K en plein écran, on aura 3800 pixels calculés
-
             inverse.TransformPoints(pixel_pts);
 
             // Distance qui sépare deux pixels à l'écran en largeur
@@ -139,8 +137,8 @@ namespace FonctionAmelioration
             }
 
             Pen pen = new Pen(Color.Black, 0);
-            Pen penfct = new Pen(Color.Purple, 0.005f);
-            Pen penfct2 = new Pen(Color.SteelBlue, 0.005f);
+            Pen penfct = new Pen(Color.Purple, 0.05f);
+            Pen penfct2 = new Pen(Color.SteelBlue, 0.05f);
 
             Dessin(gr, penfct, pointsXY);
             Dessin(gr, penfct2, pointsXYFct2);
@@ -225,6 +223,12 @@ namespace FonctionAmelioration
         {
             lblSourisX.Text = (" X :" + Math.Round((e.X * (dx*xmax) + xmin),2)).ToString();
             lblSourisY.Text = (" Y "+Math.Round(-(e.Y * (dy*ymax) - ymax),2)).ToString();
+        }
+
+        private void chkBParametrique_CheckedChanged(object sender, EventArgs e)
+        {
+            Invalidate();
+            Update();
         }
     }
 }
