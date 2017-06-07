@@ -20,14 +20,21 @@ namespace FonctionAmelioration
             gr.DrawLine(graphPen, (float)xmin, 0, (float)xmax, 0);
             float dy = (float)((ymax - ymin) / 120.0);
             double nbGradX = 1;
-            if (xmax%5 == 0)
-            {
-                nbGradX = xmax / 5;
-            }
+            if (xmax % 10 == 0)
+                nbGradX = xmax / 10;
             else
             {
-                nbGradX = xmax / 2;
+                if (xmax % 5 == 0)
+                    nbGradX = xmax / 5;
+                else
+                {
+                    if (xmax % 3 == 0)
+                        nbGradX = xmax / 3;
+                    else
+                        nbGradX = xmax / 2;
+                }
             }
+
 
             for (double x = start_x; x <= xmax; x += nbGradX)
             {
@@ -43,13 +50,20 @@ namespace FonctionAmelioration
             gr.DrawLine(graphPen, 0, (float)ymin, 0, (float)ymax);
             float dx = (float)((xmax - xmin) / 120.0);
             double nbGradY = 1;
-            if (ymax % 5== 0)
-            {
-                nbGradY = ymax / 5;
-            }
+            if (ymax % 10 == 0)
+                nbGradY = ymax / 10;
             else
             {
-                nbGradY = ymax / 2;
+                if (ymax % 5 == 0)
+                    nbGradY = ymax / 5;
+                else
+                {
+                    if (ymax % 3 == 0)
+                        nbGradY = ymax / 3;
+                    else
+                        nbGradY = ymax / 2;
+                }
+                    
             }
             for (double y = start_y; y <= ymax; y += nbGradY)
             {

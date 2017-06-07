@@ -26,12 +26,13 @@ namespace FonctionAmelioration
         double newXmaxAFF;
         double newYminAFF;
         double newYmaxAFF;
-        Graphics gr;     
+        Graphics gr;
+        bool calcul;     
 
-        private string xZoomMin = "-100";
-        private string xZoomMax = "100";
-        private string yZoomMin = "-100";
-        private string yZoomMax = "100";
+        private string xZoomMin = "-10";
+        private string xZoomMax = "10";
+        private string yZoomMin = "-10";
+        private string yZoomMax = "10";
         float zoomSacle;
 
         private float dx;
@@ -49,23 +50,18 @@ namespace FonctionAmelioration
             newXmaxAFF = Convert.ToDouble(xZoomMax);
             newYminAFF = Convert.ToDouble(yZoomMin);
             newYmaxAFF = Convert.ToDouble(yZoomMax);
+            calcul = false;
         }
 
         private void Fonction_MouseWheel(object sender, MouseEventArgs e)
         {
-            
-            zoomSacle += (float)((e.Delta / 120));
-
+           
             this.Text = zoomSacle.ToString();
             #region //Zoom
-            //if (zoomSacle >= 0)
-            //{
-            //    zoomSacle = 0;
-            //}
-            //if (zoomSacle <= -18)
-            //{
-            //    zoomSacle = -18;
-            //}
+            if (zoomSacle >= 0)
+                zoomSacle += (float)((e.Delta / 120)/10);
+            else
+                zoomSacle += (float)((e.Delta / 120));
             if (zoomSacle < 0)
             {
                 xZoomMin = (zoomSacle).ToString();
@@ -96,6 +92,8 @@ namespace FonctionAmelioration
             gr = Graphics.FromImage(GraphImage);
             gr.Clear(Color.White);
             gr.SmoothingMode = SmoothingMode.HighQuality;
+            if (xmin != Convert.ToDouble(xZoomMin))
+                calcul = true;
         
             // Remplacer par une vrai constante (ici 3) 21:9 ou 16:9 le rapport dépend de l'écran
             xmin = double.Parse(xZoomMin);
@@ -106,15 +104,9 @@ namespace FonctionAmelioration
             float world_height = (float) Math.Abs(ymax - ymin);
 
             // Scale to make the area fit the PictureBox.
-            RectangleF world_coords = new RectangleF(
-                (float)xmin, (float)xmin, world_width, world_height);
+            RectangleF world_coords = new RectangleF((float)xmin, (float)xmin, world_width, world_height);
             
-            PointF[] device_coords =
-            {
-                        new PointF(0, 0),
-                        new PointF(picGraph.ClientSize.Width, 0),
-                        new PointF(0, picGraph.ClientSize.Height)
-                    };
+            PointF[] device_coords ={ new PointF(0, 0), new PointF(picGraph.ClientSize.Width, 0), new PointF(0, picGraph.ClientSize.Height) };
 
             // Matrice de points proportionnelle au nombre de pixels affichés
             gr.Transform = new Matrix(world_coords, device_coords);
@@ -125,11 +117,7 @@ namespace FonctionAmelioration
             Matrix inverse = gr.Transform;
             inverse.Invert();
 
-            PointF[] pixel_pts =
-            {
-                    new PointF(0, 1),
-                    new PointF(1, 0),
-            };
+            PointF[] pixel_pts = {new PointF(0, 1),new PointF(1, 0), };
 
             // Echantillonner en fonction de la taille de la fenetre affichée 
             // Par exemple sur un écran 4K en plein écran, on aura 3800 pixels calculés
@@ -137,11 +125,18 @@ namespace FonctionAmelioration
             inverse.TransformPoints(pixel_pts);
 
             // Distance qui sépare deux pixels à l'écran en largeur
-            dx = Math.Abs(pixel_pts[1].X - pixel_pts[0].X)/(float)xmax;
+            dx = Math.Abs(pixel_pts[1].X - pixel_pts[0].X);
             // Utile en coordonnées paramétrique (x=cos(t,dx), y=sin(t,dy))
-            dy = Math.Abs(pixel_pts[1].Y - pixel_pts[0].Y)/ (float)ymax;
+            dy = Math.Abs(pixel_pts[1].Y - pixel_pts[0].Y);
 
-            Calcul();
+            dx /= (float)xmax;
+            dy /= (float)ymax;
+
+            if (calcul)
+            {
+                Calcul();
+                calcul = false;
+            }
 
             Pen pen = new Pen(Color.Black, 0);
             Pen penfct = new Pen(Color.Purple, 0.005f);
@@ -166,7 +161,7 @@ namespace FonctionAmelioration
                 foreach (var item in points)
                 {
                     //Regarde la difference entre le point actuelle et l'ancien
-                    if ((Math.Abs(item.Y) > (ymax+9.95)) || (Math.Abs(item.Y) < (ymin-9.95)))
+                    if ((Math.Abs(item.Y) > (ymax+ymax/5)) || (Math.Abs(item.Y) < (ymin-ymax/5)))
                     {
                         lstDeLst.Add(lstTmp);
                         lstTmp = new List<PointF>();
@@ -203,14 +198,21 @@ namespace FonctionAmelioration
                 if (chkBParametrique.Checked)
                 {
                     Calcul fonctionParametrique = new Calcul(TraitementTexte.equation(txtBoxEquation.Text), TraitementTexte.equation(txtBoxFct2.Text));
-                    pointsXY = fonctionParametrique.PointXYEquationParametrique(xmin, xmax, dx ,dy);
+                    pointsXY = fonctionParametrique.PointXYEquationParametrique(xmin, xmax, dx);
                 }
                 else
                 {
+                    if (txtBoxEquation.Text != string.Empty)
+                    {
                         Calcul fonctionNumeroUne = new Calcul(TraitementTexte.equation(txtBoxEquation.Text));
-                        pointsXY = fonctionNumeroUne.PointXYEquation(xmin - 10, xmax + 10, dx, this);
+                        pointsXY = fonctionNumeroUne.PointXYEquation(xmin - xmax / 10, xmax + xmax/10, dx, this);
+                    }
+                    if (txtBoxFct2.Text != string.Empty)
+                    {
                         Calcul fonctionNumeroDeux = new Calcul(TraitementTexte.equation(txtBoxFct2.Text));
-                        pointsXYFct2 = fonctionNumeroDeux.PointXYEquation(xmin - 10, xmax + 10, dx, this);
+                        pointsXYFct2 = fonctionNumeroDeux.PointXYEquation(xmin - xmax / 10, xmax + xmax/10, dx, this);
+                    }
+                    
                 }
             }
             catch
@@ -221,8 +223,8 @@ namespace FonctionAmelioration
 
         private void picGraph_MouseMove(object sender, MouseEventArgs e)
         {
-            lblSourisX.Text = (" X :" + Math.Round((e.X * dx + xmin),2)).ToString();
-            lblSourisY.Text = (" Y "+Math.Round(-(e.Y * dy - ymax),2)).ToString();
+            lblSourisX.Text = (" X :" + Math.Round((e.X * (dx*xmax) + xmin),2)).ToString();
+            lblSourisY.Text = (" Y "+Math.Round(-(e.Y * (dy*ymax) - ymax),2)).ToString();
         }
     }
 }

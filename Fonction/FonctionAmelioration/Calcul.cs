@@ -18,6 +18,8 @@ namespace FonctionAmelioration
 
         string _equationParamY;
 
+        MathParser parser;
+
         /// <summary>
         /// Constructeur pour la fonction catésienne
         /// </summary>
@@ -26,6 +28,7 @@ namespace FonctionAmelioration
         public Calcul(string equation)
         {
             this._equation = equation;
+            parser = new MathParser();
         }
         /// <summary>
         /// Constructeur pour la fonction paramétrique
@@ -36,6 +39,7 @@ namespace FonctionAmelioration
         {
             this._equationParamX = equationParamX;
             this._equationParamY = equationParamY;
+            parser = new MathParser();
         }
 
         /// <summary>
@@ -49,30 +53,28 @@ namespace FonctionAmelioration
             {
                 float y = Convert.ToSingle(Calculate(_equation,x));
 
-                if (!(double.IsNaN(y)) && (y < float.MaxValue) && (y > float.MinValue) && (y != 0))
+                if (!(double.IsNaN(y)) && (y != 0))
                 {
                     XY.Add(new PointF(x, -y));
                 }
-
             }
             return XY;
         }
 
-        public List<PointF> PointXYEquationParametrique(double ymin, double ymax, float dx, float dy)
+        public List<PointF> PointXYEquationParametrique(double xmin, double xmax, float dx)
         {
             List<PointF> XY = new List<PointF>();
-            for (float t = (float)ymin; t < ymax; t += dx)
+
+            for (float t = (float)xmin; t < xmax; t += dx)
             {
                 float x = Convert.ToSingle(Calculate(_equationParamX, t));
                 float y = Convert.ToSingle(Calculate(_equationParamY, t));
 
-                if (!(double.IsNaN(y)) && (y < float.MaxValue) && (y > float.MinValue) && (y != 0) && !(double.IsNaN(x)) && (x < float.MaxValue) && (x > float.MinValue) && (x != 0))
+                if (!(double.IsNaN(y))  && (y != 0) && !(double.IsNaN(x))  && (x != 0))
                 {
                     XY.Add(new PointF(x, -y));
                 }
             }
-
-            
             return XY;
         }
 
@@ -82,12 +84,11 @@ namespace FonctionAmelioration
         /// </summary>
         /// <param name="formula">équation string qu'on doit calculer</param>
         /// <returns>le résultat de l'équation donc le point Y</returns>
-        string Calculate(string equation,float x)
+        double Calculate(string equation,float x)
         {
-            MathParser parser = new MathParser();
             parser.Expression = equation;
             parser.X = x;
-            return parser.ValueAsString;
+            return parser.ValueAsDouble;
         }
     }
 }
