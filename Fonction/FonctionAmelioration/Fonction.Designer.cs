@@ -38,6 +38,10 @@ namespace FonctionAmelioration
             this.lblFctUn = new System.Windows.Forms.Label();
             this.lblFct2 = new System.Windows.Forms.Label();
             this.chkBParametrique = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblCordSourisX = new System.Windows.Forms.Label();
+            this.lblSourisX = new System.Windows.Forms.Label();
+            this.lblSourisY = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picGraph)).BeginInit();
             this.SuspendLayout();
             // 
@@ -113,11 +117,47 @@ namespace FonctionAmelioration
             this.chkBParametrique.TabIndex = 4;
             this.chkBParametrique.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(23, 875);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 13);
+            this.label1.TabIndex = 8;
+            // 
+            // lblCordSourisX
+            // 
+            this.lblCordSourisX.AutoSize = true;
+            this.lblCordSourisX.Location = new System.Drawing.Point(23, 901);
+            this.lblCordSourisX.Name = "lblCordSourisX";
+            this.lblCordSourisX.Size = new System.Drawing.Size(0, 13);
+            this.lblCordSourisX.TabIndex = 9;
+            // 
+            // lblSourisX
+            // 
+            this.lblSourisX.AutoSize = true;
+            this.lblSourisX.Location = new System.Drawing.Point(30, 874);
+            this.lblSourisX.Name = "lblSourisX";
+            this.lblSourisX.Size = new System.Drawing.Size(0, 13);
+            this.lblSourisX.TabIndex = 10;
+            // 
+            // lblSourisY
+            // 
+            this.lblSourisY.AutoSize = true;
+            this.lblSourisY.Location = new System.Drawing.Point(30, 901);
+            this.lblSourisY.Name = "lblSourisY";
+            this.lblSourisY.Size = new System.Drawing.Size(0, 13);
+            this.lblSourisY.TabIndex = 11;
+            // 
             // Fonction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 919);
+            this.Controls.Add(this.lblSourisY);
+            this.Controls.Add(this.lblSourisX);
+            this.Controls.Add(this.lblCordSourisX);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblFct2);
             this.Controls.Add(this.lblFctUn);
             this.Controls.Add(this.lblCheckBoxParam);
@@ -143,6 +183,10 @@ namespace FonctionAmelioration
         private Label lblFctUn;
         private Label lblFct2;
         private CheckBox chkBParametrique;
+        private Label label1;
+        private Label lblCordSourisX;
+        private Label lblSourisX;
+        private Label lblSourisY;
     }
 }
 

@@ -28,10 +28,10 @@ namespace FonctionAmelioration
         double newYmaxAFF;
         Graphics gr;     
 
-        private string xZoomMin = "-5";
-        private string xZoomMax = "5";
-        private string yZoomMin = "-5";
-        private string yZoomMax = "5";
+        private string xZoomMin = "-100";
+        private string xZoomMax = "100";
+        private string yZoomMin = "-100";
+        private string yZoomMax = "100";
         float zoomSacle;
 
         private float dx;
@@ -58,14 +58,14 @@ namespace FonctionAmelioration
 
             this.Text = zoomSacle.ToString();
             #region //Zoom
-            if (zoomSacle >= 0)
-            {
-                zoomSacle = 0;
-            }
-            if (zoomSacle <= -18)
-            {
-                zoomSacle = -18;
-            }
+            //if (zoomSacle >= 0)
+            //{
+            //    zoomSacle = 0;
+            //}
+            //if (zoomSacle <= -18)
+            //{
+            //    zoomSacle = -18;
+            //}
             if (zoomSacle < 0)
             {
                 xZoomMin = (zoomSacle).ToString();
@@ -73,11 +73,12 @@ namespace FonctionAmelioration
                 yZoomMin = (zoomSacle).ToString();
                 yZoomMax = (-1 * zoomSacle).ToString();
             }
-
-            newXminAFF = e.X * dx + xmin;
-            newXmaxAFF = e.X * dx + xmax;
-            newYminAFF = e.Y * dy + ymin;
-            newYmaxAFF = e.Y * dy + ymax;
+            double posSourisY = Math.Round(-(e.Y * dy - ymax),2);
+            double posSourisX = Math.Round(e.X * dx + xmin,2);
+            newXminAFF = posSourisX + xmin/4;
+            newXmaxAFF = posSourisX + xmax/4;
+            newYminAFF = posSourisY + ymin/4;
+            newYmaxAFF = posSourisY + ymax/4;
             #endregion
             Invalidate();
             Update();
@@ -101,12 +102,12 @@ namespace FonctionAmelioration
             xmax = double.Parse(xZoomMax);
             ymin = double.Parse(yZoomMin);
             ymax = double.Parse(yZoomMax);
-            float world_width  = (float) Math.Abs(newXmaxAFF - newXminAFF);
-            float world_height = (float) Math.Abs(newYmaxAFF - newYminAFF);
+            float world_width  = (float) Math.Abs(xmax - xmin);
+            float world_height = (float) Math.Abs(ymax - ymin);
 
             // Scale to make the area fit the PictureBox.
             RectangleF world_coords = new RectangleF(
-                (float)newXminAFF, (float)newXminAFF, world_width, world_height);
+                (float)xmin, (float)xmin, world_width, world_height);
             
             PointF[] device_coords =
             {
@@ -117,6 +118,7 @@ namespace FonctionAmelioration
 
             // Matrice de points proportionnelle au nombre de pixels affichés
             gr.Transform = new Matrix(world_coords, device_coords);
+
             Graphique.DessinGraphique(gr, xmin, xmax, ymin, ymax);
 
             // See how big a pixel is before scaling.
@@ -135,9 +137,9 @@ namespace FonctionAmelioration
             inverse.TransformPoints(pixel_pts);
 
             // Distance qui sépare deux pixels à l'écran en largeur
-            dx = Math.Abs(pixel_pts[1].X - pixel_pts[0].X);
+            dx = Math.Abs(pixel_pts[1].X - pixel_pts[0].X)/(float)xmax;
             // Utile en coordonnées paramétrique (x=cos(t,dx), y=sin(t,dy))
-            dy = Math.Abs(pixel_pts[1].Y - pixel_pts[0].Y);
+            dy = Math.Abs(pixel_pts[1].Y - pixel_pts[0].Y)/ (float)ymax;
 
             Calcul();
 
@@ -148,8 +150,6 @@ namespace FonctionAmelioration
             Dessin(gr, penfct, pointsXY);
             Dessin(gr, penfct2, pointsXYFct2);
 
-            //gr.DrawLines(pen, pointsGraphiqueX.ToArray());
-            //gr.DrawLines(pen, pointsGraphiqueY.ToArray());
             DoubleBuffered = true;
             gr.Dispose();
             // Display the result.
@@ -221,7 +221,8 @@ namespace FonctionAmelioration
 
         private void picGraph_MouseMove(object sender, MouseEventArgs e)
         {
-            this.Text = (e.X * dx + xmin +" "+ e.Y*dy + ymin).ToString();
+            lblSourisX.Text = (" X :" + Math.Round((e.X * dx + xmin),2)).ToString();
+            lblSourisY.Text = (" Y "+Math.Round(-(e.Y * dy - ymax),2)).ToString();
         }
     }
 }
