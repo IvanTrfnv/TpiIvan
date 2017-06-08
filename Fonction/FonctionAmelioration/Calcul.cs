@@ -46,7 +46,7 @@ namespace FonctionAmelioration
         /// 
         /// </summary>
         /// <returns>Retourn une liste avec les points X et Y de la droite</returns>
-        public List<PointF> PointXYEquation(double xmin, double xmax, float dx, Form frm)
+        public List<PointF> PointXYEquation(double xmin, double xmax, float dx)
         {
             List<PointF> XY = new List<PointF>();
             for (float x = (float)xmin; x <= xmax; x += dx)
