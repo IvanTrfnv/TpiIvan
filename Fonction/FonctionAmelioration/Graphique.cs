@@ -4,16 +4,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FonctionAmelioration
 {
     public static class Graphique
     {
-        public static void DessinGraphique(Graphics gr,double xmin, double xmax, double ymin, double ymax)
+        public static void DessinGraphique(Graphics gr,double xmin, double xmax, double ymin, double ymax, Form frm)
         {
             FontFamily arial = new FontFamily("Arial");
-            float font_size = (float)Math.Max(Math.Abs(xmax - xmin), Math.Abs(ymax - ymin))/100.0f; 
-            float trait_size = (float)Math.Max(Math.Abs(xmax - xmin), Math.Abs(ymax - ymin)) / 700.0f;
+            float font_size = (float)Math.Max(Math.Abs(xmax - xmin), Math.Abs(ymax - ymin))/ (frm.Height/10); 
+            float trait_size = (float)Math.Max(Math.Abs(xmax - xmin), Math.Abs(ymax - ymin)) / frm.Height;
 
             // Draw the X-axis.
             Pen graphPen = new Pen(Color.Black, trait_size);
@@ -60,9 +61,6 @@ namespace FonctionAmelioration
                 double yAffichage = Math.Round(-y,2);
                 gr.DrawString(yAffichage.ToString(), new Font(arial, font_size), Brushes.Black, new PointF(-2*dx, (float)y));
             }
-
-
-
         }
     }
 }

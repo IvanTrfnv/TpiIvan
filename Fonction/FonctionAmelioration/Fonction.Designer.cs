@@ -42,14 +42,18 @@ namespace FonctionAmelioration
             this.lblCordSourisX = new System.Windows.Forms.Label();
             this.lblSourisX = new System.Windows.Forms.Label();
             this.lblSourisY = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.picGraph)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtBoxEquation
             // 
             this.txtBoxEquation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxEquation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBoxEquation.Location = new System.Drawing.Point(883, 868);
+            this.txtBoxEquation.Location = new System.Drawing.Point(883, 889);
             this.txtBoxEquation.Name = "txtBoxEquation";
             this.txtBoxEquation.Size = new System.Drawing.Size(100, 20);
             this.txtBoxEquation.TabIndex = 0;
@@ -59,7 +63,7 @@ namespace FonctionAmelioration
             // 
             this.txtBoxFct2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxFct2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBoxFct2.Location = new System.Drawing.Point(883, 894);
+            this.txtBoxFct2.Location = new System.Drawing.Point(883, 915);
             this.txtBoxFct2.Name = "txtBoxFct2";
             this.txtBoxFct2.Size = new System.Drawing.Size(100, 20);
             this.txtBoxFct2.TabIndex = 2;
@@ -70,7 +74,7 @@ namespace FonctionAmelioration
             this.picGraph.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.picGraph.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picGraph.Location = new System.Drawing.Point(3, 3);
+            this.picGraph.Location = new System.Drawing.Point(3, 24);
             this.picGraph.Name = "picGraph";
             this.picGraph.Size = new System.Drawing.Size(980, 859);
             this.picGraph.TabIndex = 3;
@@ -81,7 +85,7 @@ namespace FonctionAmelioration
             // 
             this.lblCheckBoxParam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCheckBoxParam.AutoSize = true;
-            this.lblCheckBoxParam.Location = new System.Drawing.Point(659, 870);
+            this.lblCheckBoxParam.Location = new System.Drawing.Point(659, 891);
             this.lblCheckBoxParam.Name = "lblCheckBoxParam";
             this.lblCheckBoxParam.Size = new System.Drawing.Size(113, 13);
             this.lblCheckBoxParam.TabIndex = 5;
@@ -91,7 +95,7 @@ namespace FonctionAmelioration
             // 
             this.lblFctUn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFctUn.AutoSize = true;
-            this.lblFctUn.Location = new System.Drawing.Point(804, 868);
+            this.lblFctUn.Location = new System.Drawing.Point(804, 889);
             this.lblFctUn.Name = "lblFctUn";
             this.lblFctUn.Size = new System.Drawing.Size(75, 13);
             this.lblFctUn.TabIndex = 6;
@@ -101,7 +105,7 @@ namespace FonctionAmelioration
             // 
             this.lblFct2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFct2.AutoSize = true;
-            this.lblFct2.Location = new System.Drawing.Point(804, 896);
+            this.lblFct2.Location = new System.Drawing.Point(804, 917);
             this.lblFct2.Name = "lblFct2";
             this.lblFct2.Size = new System.Drawing.Size(75, 13);
             this.lblFct2.TabIndex = 7;
@@ -111,7 +115,7 @@ namespace FonctionAmelioration
             // 
             this.chkBParametrique.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chkBParametrique.AutoSize = true;
-            this.chkBParametrique.Location = new System.Drawing.Point(778, 870);
+            this.chkBParametrique.Location = new System.Drawing.Point(778, 891);
             this.chkBParametrique.Name = "chkBParametrique";
             this.chkBParametrique.Size = new System.Drawing.Size(15, 14);
             this.chkBParametrique.TabIndex = 4;
@@ -150,11 +154,35 @@ namespace FonctionAmelioration
             this.lblSourisY.Size = new System.Drawing.Size(0, 13);
             this.lblSourisY.TabIndex = 11;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionToolStripMenuItem,
+            this.toolStripMenuItem1});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(984, 24);
+            this.menuStrip1.TabIndex = 12;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // optionToolStripMenuItem
+            // 
+            this.optionToolStripMenuItem.Name = "optionToolStripMenuItem";
+            this.optionToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.optionToolStripMenuItem.Text = "Option";
+            this.optionToolStripMenuItem.Click += new System.EventHandler(this.optionToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(24, 20);
+            this.toolStripMenuItem1.Text = "?";
+            // 
             // Fonction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 919);
+            this.ClientSize = new System.Drawing.Size(984, 940);
             this.Controls.Add(this.lblSourisY);
             this.Controls.Add(this.lblSourisX);
             this.Controls.Add(this.lblCordSourisX);
@@ -166,10 +194,14 @@ namespace FonctionAmelioration
             this.Controls.Add(this.picGraph);
             this.Controls.Add(this.txtBoxFct2);
             this.Controls.Add(this.txtBoxEquation);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Fonction";
             this.Text = "Fonction";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.picGraph)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -188,6 +220,9 @@ namespace FonctionAmelioration
         private Label lblCordSourisX;
         private Label lblSourisX;
         private Label lblSourisY;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem optionToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem1;
     }
 }
 
