@@ -42,6 +42,7 @@
             this.lblXmax = new System.Windows.Forms.Label();
             this.lblYmin = new System.Windows.Forms.Label();
             this.lblYmax = new System.Windows.Forms.Label();
+            this.btnReinitialiser = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nmUpPrecisionCalcul)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmUpParamK)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmUpparamKMax)).BeginInit();
@@ -264,11 +265,22 @@
             this.lblYmax.TabIndex = 13;
             this.lblYmax.Text = "Ymax : ";
             // 
+            // btnReinitialiser
+            // 
+            this.btnReinitialiser.Location = new System.Drawing.Point(12, 141);
+            this.btnReinitialiser.Name = "btnReinitialiser";
+            this.btnReinitialiser.Size = new System.Drawing.Size(102, 23);
+            this.btnReinitialiser.TabIndex = 14;
+            this.btnReinitialiser.Text = "Réinitialiser";
+            this.btnReinitialiser.UseVisualStyleBackColor = true;
+            this.btnReinitialiser.Click += new System.EventHandler(this.btnReinitialiser_Click);
+            // 
             // frmOption
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 176);
+            this.Controls.Add(this.btnReinitialiser);
             this.Controls.Add(this.lblYmax);
             this.Controls.Add(this.lblYmin);
             this.Controls.Add(this.lblXmax);
@@ -314,5 +326,6 @@
         private System.Windows.Forms.Label lblXmax;
         private System.Windows.Forms.Label lblYmin;
         private System.Windows.Forms.Label lblYmax;
+        private System.Windows.Forms.Button btnReinitialiser;
     }
 }

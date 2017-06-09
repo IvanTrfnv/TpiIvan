@@ -13,17 +13,28 @@ namespace FonctionAmelioration
     public partial class frmOption : Form
     {
         private Fonction frm;
-        public frmOption(Fonction frm)
+        private TextBox fct1, fct2;
+        CheckBox chk;
+
+        public frmOption(Fonction frm, TextBox fct1, TextBox fct2, CheckBox chk)
         {
             InitializeComponent();
-            nmUpPrecisionCalcul.Value = Option.PrecisionCalcul/10;
+            InisialisationComposent();
+            this.frm = frm;
+            this.fct1 = fct1;
+            this.fct2 = fct2;
+            this.chk = chk;
+        }
+
+        private void InisialisationComposent()
+        {
+            nmUpPrecisionCalcul.Value = Option.PrecisionCalcul / 10;
             nmUpXmin.Value = Convert.ToDecimal(Option.Xmin);
             nmUpXmax.Value = Convert.ToDecimal(Option.Xmax);
             nmUpYmin.Value = Convert.ToDecimal(Option.Ymin);
             nmUpYmax.Value = Convert.ToDecimal(Option.Ymax);
             nmUpParamK.Value = Option.ParamK;
             nmUpparamKMax.Value = Option.ParamKMax;
-            this.frm = frm;
         }
 
         private void btnEnregistrer_Click(object sender, EventArgs e)
@@ -42,6 +53,24 @@ namespace FonctionAmelioration
         private void frmOption_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.Dispose();
+        }
+
+        private void btnReinitialiser_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Voulez vous vraiment effacer l'ensemble de vos équations ?", "Confirm", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+            {
+                Option.Xmin = -5;
+                Option.Xmax = 5;
+                Option.Ymin = -5;
+                Option.Ymax = 5;
+                Option.PrecisionCalcul = Convert.ToInt32(nmUpPrecisionCalcul.Value) * 10;
+                fct1.Text = "";
+                fct2.Text = "";
+                chk.Checked = false;
+                InisialisationComposent();
+                frm.Rafraichir();
+            }
+
         }
     }
 }

@@ -129,7 +129,7 @@ namespace FonctionAmelioration
             Matrix inverse = gr.Transform;
             inverse.Invert();
 
-            PointF[] pixel_pts = {new PointF(0, 1),new PointF(1, 0), };
+            PointF[] pixel_pts = {new PointF(0, 1),new PointF(1, 0)};
 
             // Echantillonner en fonction de la taille de la fenetre affichée 
             // Par exemple sur un écran 4K en plein écran, on aura 3800 pixels calculés
@@ -169,7 +169,6 @@ namespace FonctionAmelioration
 
         private new void TextChanged(object sender, EventArgs e)
         {
-            
             Rafraichir();
         }
 
@@ -184,15 +183,25 @@ namespace FonctionAmelioration
                 }
                 else
                 {
+                    Calcul fonctionNumeroUne = new Calcul(TraitementTexte.equation(txtBoxEquation.Text));
                     if (txtBoxEquation.Text != string.Empty)
                     {
-                        Calcul fonctionNumeroUne = new Calcul(TraitementTexte.equation(txtBoxEquation.Text));
                         VerificationParamK(fonctionNumeroUne, ref pointsXY, ref listsPointsXY);
                     }
+                    else
+                    {
+                        pointsXY.Clear();
+                        listsPointsXY.Clear();
+                    }
+                    Calcul fonctionNumeroDeux = new Calcul(TraitementTexte.equation(txtBoxFct2.Text));
                     if (txtBoxFct2.Text != string.Empty)
                     {
-                        Calcul fonctionNumeroDeux = new Calcul(TraitementTexte.equation(txtBoxFct2.Text));
                         VerificationParamK(fonctionNumeroDeux, ref pointsXYFct2, ref listsPointsXYFct2);
+                    }
+                    else
+                    {
+                        pointsXYFct2.Clear();
+                        listsPointsXYFct2.Clear();
                     }
                     
                 }
@@ -238,7 +247,7 @@ namespace FonctionAmelioration
 
         private void optionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmOption frmParam = new frmOption(this);
+            frmOption frmParam = new frmOption(this,txtBoxEquation,txtBoxFct2,chkBParametrique);
             frmParam.Show();
         }
 

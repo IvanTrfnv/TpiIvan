@@ -125,7 +125,7 @@ namespace FonctionAmelioration
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 875);
+            this.label1.Location = new System.Drawing.Point(16, 892);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 8;
@@ -133,7 +133,7 @@ namespace FonctionAmelioration
             // lblCordSourisX
             // 
             this.lblCordSourisX.AutoSize = true;
-            this.lblCordSourisX.Location = new System.Drawing.Point(23, 901);
+            this.lblCordSourisX.Location = new System.Drawing.Point(16, 915);
             this.lblCordSourisX.Name = "lblCordSourisX";
             this.lblCordSourisX.Size = new System.Drawing.Size(0, 13);
             this.lblCordSourisX.TabIndex = 9;
@@ -141,7 +141,7 @@ namespace FonctionAmelioration
             // lblSourisX
             // 
             this.lblSourisX.AutoSize = true;
-            this.lblSourisX.Location = new System.Drawing.Point(30, 874);
+            this.lblSourisX.Location = new System.Drawing.Point(23, 891);
             this.lblSourisX.Name = "lblSourisX";
             this.lblSourisX.Size = new System.Drawing.Size(0, 13);
             this.lblSourisX.TabIndex = 10;
@@ -149,7 +149,7 @@ namespace FonctionAmelioration
             // lblSourisY
             // 
             this.lblSourisY.AutoSize = true;
-            this.lblSourisY.Location = new System.Drawing.Point(30, 901);
+            this.lblSourisY.Location = new System.Drawing.Point(23, 915);
             this.lblSourisY.Name = "lblSourisY";
             this.lblSourisY.Size = new System.Drawing.Size(0, 13);
             this.lblSourisY.TabIndex = 11;

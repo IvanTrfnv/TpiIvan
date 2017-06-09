@@ -13,7 +13,7 @@ namespace FonctionAmelioration
         public static void DessinGraphique(Graphics gr,double xmin, double xmax, double ymin, double ymax, Form frm)
         {
             FontFamily arial = new FontFamily("Arial");
-            float font_size = (float)Math.Max(Math.Abs(xmax - xmin), Math.Abs(ymax - ymin))/ (frm.Height/10); 
+            float font_size = (float)Math.Max(Math.Abs(xmax - xmin), Math.Abs(ymax - ymin))/(float)(frm.Width/10); 
             float trait_size = (float)Math.Max(Math.Abs(xmax - xmin), Math.Abs(ymax - ymin)) / frm.Height;
 
             // Draw the X-axis.
@@ -31,7 +31,7 @@ namespace FonctionAmelioration
                 else
                     nbGradX = xmax / 2;
             }
-            for (double x = start_x; x <= xmax; x += nbGradX)
+            for (double x = start_x; x <= xmax; x += Math.Abs(nbGradX))
             {
                 gr.DrawLine(graphPen, (float)x, -2 * dy,
                     (float)x, 2 * dy);
@@ -55,7 +55,7 @@ namespace FonctionAmelioration
                 else
                     nbGradY = ymax / 2;
             }
-            for (double y = start_y; y <= ymax; y += nbGradY)
+            for (double y = start_y; y <= ymax; y += Math.Abs(nbGradY))
             {
                 gr.DrawLine(graphPen, -2 * dx, (float)y, 2 * dx, (float)y);
                 double yAffichage = Math.Round(-y,2);

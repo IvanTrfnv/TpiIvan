@@ -11,10 +11,10 @@ namespace FonctionAmelioration
         private static int precisionCalcul = 100;
         private static decimal paramK = 1;
         private static decimal paramKMax = 5;
-        private static double xmin = -1;
-        private static double xmax = 1;
-        private static double ymin = -1;
-        private static double ymax = 1;
+        private static double xmin = -5;
+        private static double xmax = 5;
+        private static double ymin = -5;
+        private static double ymax = 5;
 
         public static int PrecisionCalcul
         {
