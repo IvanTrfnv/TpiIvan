@@ -16,6 +16,9 @@ namespace FonctionAmelioration
         private List<PointF> pointsXYFct2 = new List<PointF>();
         private List<PointF> pointsGraphiqueX = new List<PointF>();
         private List<PointF> pointsGraphiqueY = new List<PointF>();
+        private List<List<PointF>> listsPointsXY = new List<List<PointF>>();
+        private List<List<PointF>> listsPointsXYFct2 = new List<List<PointF>>();
+        private List<Pen> pens = new List<Pen>();
         private Bitmap GraphImage;
         Graphics gr;
 
@@ -37,21 +40,23 @@ namespace FonctionAmelioration
             txtBoxEquation.BringToFront();
             txtBoxFct2.BringToFront();
             this.MouseWheel += Fonction_MouseWheel;
-            xmin = -1;
-            xmax = 1;
-            ymin = -1;
-            ymax = 1;
+            xmin = Option.Xmin;
+            xmax = Option.Xmax;
+            ymin = Option.Ymin;
+            ymax = Option.Ymax;
             zoomX = Convert.ToInt32(Math.Round(Convert.ToDouble(xmin)));
             zoomY = Convert.ToInt32(Math.Round(Convert.ToDouble(ymin)));
-
         }
 
         private void Fonction_MouseWheel(object sender, MouseEventArgs e)
         {
             Zoom(e, ref zoomX, ref xmin, ref xmax);
             Zoom(e, ref zoomY, ref ymin, ref ymax);
-            Invalidate();
-            Update();
+            Option.Xmin = xmin;      
+            Option.Xmax = xmax;      
+            Option.Ymin = ymin;      
+            Option.Ymax = ymax;
+            Rafraichir();
         }
 
            
@@ -87,6 +92,7 @@ namespace FonctionAmelioration
             {
                 zoom = -0.1f;
             }
+            
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -97,6 +103,10 @@ namespace FonctionAmelioration
                 GraphImage.Dispose();
             GraphImage = new Bitmap(picGraph.ClientSize.Width, picGraph.ClientSize.Height);
 
+            xmin = Option.Xmin;
+            xmax = Option.Xmax;
+            ymin = Option.Ymin;
+            ymax = Option.Ymax;
 
             gr = Graphics.FromImage(GraphImage);
             gr.Clear(Color.White);
@@ -134,8 +144,18 @@ namespace FonctionAmelioration
             dy /= Option.PrecisionCalcul;
 
 
-            Calcul();
-
+            int penNumber = 0;
+            foreach (var list in listsPointsXY)
+            {
+                Dessin.Dessiner(gr, pens[penNumber], list, ymin, ymax);
+                penNumber++;
+            }
+            penNumber = 0;
+            foreach (var list in listsPointsXYFct2)
+            {
+                Dessin.Dessiner(gr, pens[penNumber], list, ymin, ymax);
+                penNumber++;
+            }
             Dessin.Dessiner(gr, new Pen(Color.Red, (float)xmax / this.Width), pointsXY, ymin, ymax);
             Dessin.Dessiner(gr, new Pen(Color.Red, (float)xmax / this.Width), pointsXYFct2, ymin, ymax);
 
@@ -149,9 +169,8 @@ namespace FonctionAmelioration
 
         private new void TextChanged(object sender, EventArgs e)
         {
-            Calcul();
-            Invalidate();
-            Update();
+            
+            Rafraichir();
         }
 
         private void Calcul()
@@ -161,19 +180,19 @@ namespace FonctionAmelioration
                 if (chkBParametrique.Checked)
                 {
                     Calcul fonctionParametrique = new Calcul(TraitementTexte.equation(txtBoxEquation.Text), TraitementTexte.equation(txtBoxFct2.Text));
-                    pointsXY = fonctionParametrique.PointXYEquationParametrique(xmin, xmax, dx);
+                    pointsXY = fonctionParametrique.PointXYEquationParametrique(Option.Xmin, Option.Xmax, dx);
                 }
                 else
                 {
                     if (txtBoxEquation.Text != string.Empty)
                     {
                         Calcul fonctionNumeroUne = new Calcul(TraitementTexte.equation(txtBoxEquation.Text));
-                        pointsXY = fonctionNumeroUne.PointXYEquation(xmin - xmax / 10, xmax + xmax / 10, dx);
+                        VerificationParamK(fonctionNumeroUne, ref pointsXY, ref listsPointsXY);
                     }
                     if (txtBoxFct2.Text != string.Empty)
                     {
                         Calcul fonctionNumeroDeux = new Calcul(TraitementTexte.equation(txtBoxFct2.Text));
-                        pointsXYFct2 = fonctionNumeroDeux.PointXYEquation(xmin - xmax / 10, xmax + xmax / 10, dx);
+                        VerificationParamK(fonctionNumeroDeux, ref pointsXYFct2, ref listsPointsXYFct2);
                     }
                     
                 }
@@ -184,22 +203,50 @@ namespace FonctionAmelioration
             }
         }
 
+        private void VerificationParamK(Calcul fonction,ref List<PointF> points,ref List<List<PointF>> listOflistOfPoints)
+        {
+            
+            if (fonction.Equation.Contains("y"))
+            {
+                Random rand = new Random();
+                listOflistOfPoints.Clear();
+                points.Clear();
+                pens.Clear();
+                for (decimal i = Option.ParamK; i < Option.ParamKMax; i++)
+                {
+                    listOflistOfPoints.Add(fonction.PointXYEquation(Option.Xmin - Option.Xmax / 10, Option.Xmax + Option.Xmax / 10, dx, (float)i));
+                    pens.Add(new Pen(Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), (float)xmax / this.Width));
+                }
+            }
+            else
+            {
+                listOflistOfPoints.Clear();
+                points = fonction.PointXYEquation(Option.Xmin - Option.Xmax / 10, Option.Xmax + Option.Xmax / 10, dx);
+            }
+        }
+
         private void picGraph_MouseMove(object sender, MouseEventArgs e)
         {
-            lblSourisX.Text = (" X : " + Math.Round((e.X * (dx*xmax) + xmin),2)).ToString();
-            lblSourisY.Text = (" Y : "+Math.Round(-(e.Y * (dy*ymax) - ymax),2)).ToString();
+            lblSourisX.Text = (" X : " + Math.Round((e.X * (dx * Option.PrecisionCalcul) + Option.Xmin),2)).ToString();
+            lblSourisY.Text = (" Y : "+Math.Round(-(e.Y * (dy  * Option.PrecisionCalcul) - Option.Xmax),2)).ToString();
         }
 
         private void chkBParametrique_CheckedChanged(object sender, EventArgs e)
         {
-            Invalidate();
-            Update();
+            Rafraichir();
         }
 
         private void optionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmOption frmParam = new frmOption();
+            frmOption frmParam = new frmOption(this);
             frmParam.Show();
+        }
+
+        public void Rafraichir()
+        {
+            Calcul();
+            Invalidate();
+            Update();
         }
     }
 }

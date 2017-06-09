@@ -15,7 +15,7 @@ namespace FonctionAmelioration
         {
             for (int i = 0; i < equationUtilisateur.Length; i++)
             {
-                if (equationUtilisateur[i] == 'x')
+                if (equationUtilisateur[i] == 'x' || equationUtilisateur[i] == 'y')
                 {
                     foreach (int nombre in tableauNombre)
                     {

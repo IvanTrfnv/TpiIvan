@@ -10,6 +10,11 @@ namespace FonctionAmelioration
     {
         private static int precisionCalcul = 100;
         private static decimal paramK = 1;
+        private static decimal paramKMax = 5;
+        private static double xmin = -1;
+        private static double xmax = 1;
+        private static double ymin = -1;
+        private static double ymax = 1;
 
         public static int PrecisionCalcul
         {
@@ -34,6 +39,71 @@ namespace FonctionAmelioration
             set
             {
                 paramK = value;
+            }
+        }
+
+        public static double Xmin
+        {
+            get
+            {
+                return xmin;
+            }
+
+            set
+            {
+                xmin = value;
+            }
+        }
+
+        public static double Xmax
+        {
+            get
+            {
+                return xmax;
+            }
+
+            set
+            {
+                xmax = value;
+            }
+        }
+
+        public static double Ymin
+        {
+            get
+            {
+                return ymin;
+            }
+
+            set
+            {
+                ymin = value;
+            }
+        }
+
+        public static double Ymax
+        {
+            get
+            {
+                return ymax;
+            }
+
+            set
+            {
+                ymax = value;
+            }
+        }
+
+        public static decimal ParamKMax
+        {
+            get
+            {
+                return paramKMax;
+            }
+
+            set
+            {
+                paramKMax = value;
             }
         }
     }

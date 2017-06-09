@@ -20,6 +20,19 @@ namespace FonctionAmelioration
 
         MathParser parser;
 
+        public string Equation
+        {
+            get
+            {
+                return _equation;
+            }
+
+            set
+            {
+                _equation = value;
+            }
+        }
+
         /// <summary>
         /// Constructeur pour la fonction catésienne
         /// </summary>
@@ -27,7 +40,7 @@ namespace FonctionAmelioration
         /// <param name="frm">la forme ou l'équation va être dessiner</param>
         public Calcul(string equation)
         {
-            this._equation = equation;
+            this.Equation = equation.ToLower();
             parser = new MathParser();
         }
         /// <summary>
@@ -51,7 +64,26 @@ namespace FonctionAmelioration
             List<PointF> XY = new List<PointF>();
             for (float x = (float)xmin; x <= xmax; x += dx)
             {
-                float y = Convert.ToSingle(Calculate(_equation,x));
+                float y = Convert.ToSingle(Calculate(Equation,x));
+
+                if (!(double.IsNaN(y)) && (y != 0))
+                {
+                    XY.Add(new PointF(x, -y));
+                }
+            }
+            return XY;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Retourn une liste avec les points X et Y de la droite</returns>
+        public List<PointF> PointXYEquation(double xmin, double xmax, float dx, float paramY)
+        {
+            List<PointF> XY = new List<PointF>();
+            for (float x = (float)xmin; x <= xmax; x += dx)
+            {
+                float y = Convert.ToSingle(Calculate(Equation, x, paramY));
 
                 if (!(double.IsNaN(y)) && (y != 0))
                 {
@@ -88,6 +120,19 @@ namespace FonctionAmelioration
         {
             parser.Expression = equation;
             parser.X = x;
+            return parser.ValueAsDouble;
+        }
+
+        /// <summary>
+        ///  CODE • http://www.bestcode.com/assets/docs/bcParserNET/
+        /// </summary>
+        /// <param name="formula">équation string qu'on doit calculer</param>
+        /// <returns>le résultat de l'équation donc le point Y</returns>
+        double Calculate(string equation, float x, float y)
+        {
+            parser.Expression = equation;
+            parser.X = x;
+            parser.Y = y;
             return parser.ValueAsDouble;
         }
     }
