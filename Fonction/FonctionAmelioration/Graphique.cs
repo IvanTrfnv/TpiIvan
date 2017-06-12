@@ -13,7 +13,7 @@ namespace FonctionAmelioration
         public static void DessinGraphique(Graphics gr,double xmin, double xmax, double ymin, double ymax, Form frm)
         {
             FontFamily arial = new FontFamily("Arial");
-            float font_size = (float)Math.Max(Math.Abs(xmax - xmin), Math.Abs(ymax - ymin))/(float)(frm.Width/10); 
+            float font_size = (float)Math.Max(Math.Abs(xmax - xmin), Math.Abs(ymax - ymin)) / (float)(frm.Width / 13);
             float trait_size = (float)Math.Max(Math.Abs(xmax - xmin), Math.Abs(ymax - ymin)) / frm.Height;
 
             // Draw the X-axis.
@@ -22,21 +22,21 @@ namespace FonctionAmelioration
             gr.DrawLine(graphPen, (float)xmin, 0, (float)xmax, 0);
             float dy = (float)((ymax - ymin) / 120.0);
             double nbGradX = 1;
-            if (xmax % 5 == 0)
-                nbGradX = xmax / 5;
-            else
-            {
-                if (xmax % 3 == 0)
-                    nbGradX = xmax / 3;
-                else
-                    nbGradX = xmax / 2;
-            }
-            for (double x = start_x; x <= xmax; x += Math.Abs(nbGradX))
+            nbGradX = NbGrad(xmin);
+            for (double x = start_x; x < 0; x += Math.Abs(nbGradX))
             {
                 gr.DrawLine(graphPen, (float)x, -2 * dy,
                     (float)x, 2 * dy);
-                
-                gr.DrawString(Math.Round(x, 2).ToString(),new Font(arial,  font_size), Brushes.Black, (float)x, -2 * dy);
+
+                gr.DrawString(Math.Round(x, 2).ToString(), new Font(arial, font_size), Brushes.Black, (float)x, -2 * dy);
+            }
+            nbGradX = NbGrad(xmax);
+            for (double x = 0; x < xmax; x += Math.Abs(nbGradX))
+            {
+                gr.DrawLine(graphPen, (float)x, -2 * dy,
+                    (float)x, 2 * dy);
+
+                gr.DrawString(Math.Round(x, 2).ToString(), new Font(arial, font_size), Brushes.Black, (float)x, -2 * dy);
             }
 
 
@@ -44,23 +44,36 @@ namespace FonctionAmelioration
             double start_y = ymin;
             gr.DrawLine(graphPen, 0, (float)ymin, 0, (float)ymax);
             float dx = (float)((xmax - xmin) / 120.0);
-            double nbGradY = 1;
-
-            if (ymax % 5 == 0)
-                nbGradY = ymax / 5;
-            else
-            {
-                if (ymax % 3 == 0)
-                    nbGradY = ymax / 3;
-                else
-                    nbGradY = ymax / 2;
-            }
-            for (double y = start_y; y <= ymax; y += Math.Abs(nbGradY))
+            double nbGradY = Math.Max(NbGrad(ymin),NbGrad(ymax));
+            for (double y = start_y; y < 0; y += Math.Abs(nbGradY))
             {
                 gr.DrawLine(graphPen, -2 * dx, (float)y, 2 * dx, (float)y);
-                double yAffichage = Math.Round(-y,2);
-                gr.DrawString(yAffichage.ToString(), new Font(arial, font_size), Brushes.Black, new PointF(-2*dx, (float)y));
+                double yAffichage = Math.Round(-y, 2);
+                gr.DrawString(yAffichage.ToString(), new Font(arial, font_size), Brushes.Black, new PointF(-2 * dx, (float)y));
             }
+            nbGradY = NbGrad(ymax);
+            for (double y = 0; y < ymax; y += Math.Abs(nbGradY))
+            {
+                gr.DrawLine(graphPen, -2 * dx, (float)y, 2 * dx, (float)y);
+                double yAffichage = Math.Round(-y, 2);
+                gr.DrawString(yAffichage.ToString(), new Font(arial, font_size), Brushes.Black, new PointF(-2 * dx, (float)y));
+            }
+        }
+
+        private static double NbGrad(double xmin)
+        {
+            double nbGradX;
+            if (xmin % 5 == 0)
+                nbGradX = xmin / 5;
+            else
+            {
+                if (xmin % 3 == 0)
+                    nbGradX = xmin / 3;
+                else
+                    nbGradX = xmin / 2;
+            }
+
+            return nbGradX;
         }
     }
 }

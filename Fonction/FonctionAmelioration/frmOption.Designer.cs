@@ -162,6 +162,7 @@
             0,
             0,
             0});
+            this.nmUpYmax.ValueChanged += new System.EventHandler(this.nmUpYmax_ValueChanged);
             // 
             // nmUpXmax
             // 
@@ -184,6 +185,7 @@
             0,
             0,
             0});
+            this.nmUpXmax.ValueChanged += new System.EventHandler(this.nmUpXmax_ValueChanged);
             // 
             // nmUpYmin
             // 
@@ -206,6 +208,7 @@
             0,
             0,
             -2147483648});
+            this.nmUpYmin.ValueChanged += new System.EventHandler(this.nmUpYmin_ValueChanged);
             // 
             // nmUpXmin
             // 
@@ -228,6 +231,7 @@
             0,
             0,
             -2147483648});
+            this.nmUpXmin.ValueChanged += new System.EventHandler(this.nmUpXmin_ValueChanged);
             // 
             // lblXmin
             // 

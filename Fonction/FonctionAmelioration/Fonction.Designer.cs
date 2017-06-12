@@ -168,8 +168,8 @@ namespace FonctionAmelioration
             // optionToolStripMenuItem
             // 
             this.optionToolStripMenuItem.Name = "optionToolStripMenuItem";
-            this.optionToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
-            this.optionToolStripMenuItem.Text = "Option";
+            this.optionToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionToolStripMenuItem.Text = "Options";
             this.optionToolStripMenuItem.Click += new System.EventHandler(this.optionToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1

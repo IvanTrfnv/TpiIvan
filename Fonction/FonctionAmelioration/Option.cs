@@ -16,6 +16,11 @@ namespace FonctionAmelioration
         private static double ymin = -5;
         private static double ymax = 5;
 
+        private static double xminOld = xmin;
+        private static double xmaxOld = xmax;
+        private static double yminOld = ymin;
+        private static double ymaxOld = ymax;
+
         public static int PrecisionCalcul
         {
             get
@@ -51,6 +56,7 @@ namespace FonctionAmelioration
 
             set
             {
+                xminOld = xmin;
                 xmin = value;
             }
         }
@@ -64,6 +70,7 @@ namespace FonctionAmelioration
 
             set
             {
+                xmaxOld = xmax;
                 xmax = value;
             }
         }
@@ -77,6 +84,7 @@ namespace FonctionAmelioration
 
             set
             {
+                yminOld = ymin;
                 ymin = value;
             }
         }
@@ -90,6 +98,7 @@ namespace FonctionAmelioration
 
             set
             {
+                ymaxOld = ymax;
                 ymax = value;
             }
         }
@@ -104,6 +113,58 @@ namespace FonctionAmelioration
             set
             {
                 paramKMax = value;
+            }
+        }
+
+        public static double XminOld
+        {
+            get
+            {
+                return xminOld;
+            }
+
+            set
+            {
+                xminOld = value;
+            }
+        }
+
+        public static double XmaxOld
+        {
+            get
+            {
+                return xmaxOld;
+            }
+
+            set
+            {
+                xmaxOld = value;
+            }
+        }
+
+        public static double YminOld
+        {
+            get
+            {
+                return yminOld;
+            }
+
+            set
+            {
+                yminOld = value;
+            }
+        }
+
+        public static double YmaxOld
+        {
+            get
+            {
+                return ymaxOld;
+            }
+
+            set
+            {
+                ymaxOld = value;
             }
         }
     }

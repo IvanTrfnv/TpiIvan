@@ -27,6 +27,12 @@ namespace FonctionAmelioration
         private double xmax;
         private double ymin;
         private double ymax;
+        //private double deltax;
+        //private double deltay;
+        //private double deltaxOld;
+        //private double deltayOld;
+        //private double coefZoomx;
+        //private double coefZoomy;
         float zoomX;
         float zoomY;
 
@@ -44,6 +50,8 @@ namespace FonctionAmelioration
             xmax = Option.Xmax;
             ymin = Option.Ymin;
             ymax = Option.Ymax;
+            //deltaxOld = Math.Abs(xmax - xmin);
+            //deltayOld = Math.Abs(ymax - ymin);
             zoomX = Convert.ToInt32(Math.Round(Convert.ToDouble(xmin)));
             zoomY = Convert.ToInt32(Math.Round(Convert.ToDouble(ymin)));
         }
@@ -52,15 +60,15 @@ namespace FonctionAmelioration
         {
             Zoom(e, ref zoomX, ref xmin, ref xmax);
             Zoom(e, ref zoomY, ref ymin, ref ymax);
-            Option.Xmin = xmin;      
-            Option.Xmax = xmax;      
-            Option.Ymin = ymin;      
+            Option.Xmin = xmin;
+            Option.Xmax = xmax;
+            Option.Ymin = ymin;
             Option.Ymax = ymax;
             Rafraichir();
         }
 
-           
-        private void Zoom(MouseEventArgs e,ref float zoom, ref double min,ref double max)
+
+        private void Zoom(MouseEventArgs e, ref float zoom, ref double min, ref double max)
         {
 
             if (zoom < -1)
@@ -92,7 +100,7 @@ namespace FonctionAmelioration
             {
                 zoom = -0.1f;
             }
-            
+
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -102,7 +110,6 @@ namespace FonctionAmelioration
             if (GraphImage != null)
                 GraphImage.Dispose();
             GraphImage = new Bitmap(picGraph.ClientSize.Width, picGraph.ClientSize.Height);
-
             xmin = Option.Xmin;
             xmax = Option.Xmax;
             ymin = Option.Ymin;
@@ -112,14 +119,18 @@ namespace FonctionAmelioration
             gr.Clear(Color.White);
             gr.SmoothingMode = SmoothingMode.HighQuality;
             gr.SmoothingMode = SmoothingMode.AntiAlias;
+            float world_width;
+            float world_height;
 
-            float world_width  = (float) Math.Abs(xmax - xmin);
-            float world_height = (float) Math.Abs(ymax - ymin);
+            world_width = (float)(Math.Abs(xmax - xmin));
+            world_height = (float)(Math.Abs(ymax - ymin));
+
+
 
             // Scale to make the area fit the PictureBox.
             RectangleF world_coords = new RectangleF((float)xmin, (float)ymin, world_width, world_height);
-            
-            PointF[] device_coords ={ new PointF(0, 0), new PointF(picGraph.ClientSize.Width, 0), new PointF(0, picGraph.ClientSize.Height) };
+
+            PointF[] device_coords = { new PointF(0, 0), new PointF(picGraph.ClientSize.Width, 0), new PointF(0, picGraph.ClientSize.Height) };
 
             // Matrice de points proportionnelle au nombre de pixels affichés
             gr.Transform = new Matrix(world_coords, device_coords);
@@ -129,7 +140,7 @@ namespace FonctionAmelioration
             Matrix inverse = gr.Transform;
             inverse.Invert();
 
-            PointF[] pixel_pts = {new PointF(0, 1),new PointF(1, 0)};
+            PointF[] pixel_pts = { new PointF(0, 1), new PointF(1, 0) };
 
             // Echantillonner en fonction de la taille de la fenetre affichée 
             // Par exemple sur un écran 4K en plein écran, on aura 3800 pixels calculés
@@ -203,7 +214,7 @@ namespace FonctionAmelioration
                         pointsXYFct2.Clear();
                         listsPointsXYFct2.Clear();
                     }
-                    
+
                 }
             }
             catch
@@ -212,9 +223,8 @@ namespace FonctionAmelioration
             }
         }
 
-        private void VerificationParamK(Calcul fonction,ref List<PointF> points,ref List<List<PointF>> listOflistOfPoints)
+        private void VerificationParamK(Calcul fonction, ref List<PointF> points, ref List<List<PointF>> listOflistOfPoints)
         {
-            
             if (fonction.Equation.Contains("y"))
             {
                 Random rand = new Random();
@@ -236,8 +246,8 @@ namespace FonctionAmelioration
 
         private void picGraph_MouseMove(object sender, MouseEventArgs e)
         {
-            lblSourisX.Text = (" X : " + Math.Round((e.X * (dx * Option.PrecisionCalcul) + Option.Xmin),2)).ToString();
-            lblSourisY.Text = (" Y : "+Math.Round(-(e.Y * (dy  * Option.PrecisionCalcul) - Option.Xmax),2)).ToString();
+            lblSourisX.Text = (" X : " + Math.Round((e.X * (dx * Option.PrecisionCalcul) + Option.Xmin), 2)).ToString();
+            lblSourisY.Text = (" Y : " + Math.Round(-(e.Y * (dy * Option.PrecisionCalcul) - Option.Xmax), 2)).ToString();
         }
 
         private void chkBParametrique_CheckedChanged(object sender, EventArgs e)
@@ -247,7 +257,7 @@ namespace FonctionAmelioration
 
         private void optionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmOption frmParam = new frmOption(this,txtBoxEquation,txtBoxFct2,chkBParametrique);
+            frmOption frmParam = new frmOption(this, txtBoxEquation, txtBoxFct2, chkBParametrique);
             frmParam.Show();
         }
 

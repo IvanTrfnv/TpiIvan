@@ -15,6 +15,17 @@ namespace FonctionAmelioration
         private Fonction frm;
         private TextBox fct1, fct2;
         CheckBox chk;
+        private double deltax;
+        private double deltay;
+        private double deltaxOld;
+        private double deltayOld;
+        private double coefZoomx;
+        private double coefZoomy;
+
+        private double tmpxmin;
+        private double tmpxmax;
+        private double tmpymin;
+        private double tmpymax;
 
         public frmOption(Fonction frm, TextBox fct1, TextBox fct2, CheckBox chk)
         {
@@ -33,6 +44,10 @@ namespace FonctionAmelioration
             nmUpXmax.Value = Convert.ToDecimal(Option.Xmax);
             nmUpYmin.Value = Convert.ToDecimal(Option.Ymin);
             nmUpYmax.Value = Convert.ToDecimal(Option.Ymax);
+            tmpxmin = Option.Xmin; 
+            tmpxmax =Option.Xmax; 
+            tmpymin =Option.Ymin; 
+            tmpymax = Option.Ymax;
             nmUpParamK.Value = Option.ParamK;
             nmUpparamKMax.Value = Option.ParamKMax;
         }
@@ -40,12 +55,12 @@ namespace FonctionAmelioration
         private void btnEnregistrer_Click(object sender, EventArgs e)
         {
             Option.PrecisionCalcul = Convert.ToInt32(nmUpPrecisionCalcul.Value)*10;
-            Option.Xmin =Convert.ToDouble(nmUpXmin.Value);
-            Option.Xmax = Convert.ToDouble(nmUpXmax.Value);
-            Option.Ymin = Convert.ToDouble(nmUpYmin.Value);
-            Option.Ymax = Convert.ToDouble(nmUpYmax.Value);
             Option.ParamK = nmUpParamK.Value;
             Option.ParamKMax = nmUpparamKMax.Value;
+            Option.Xmin = tmpxmin;
+            Option.Xmax = tmpxmax;
+            Option.Ymin = tmpymin;
+            Option.Ymax = tmpymax;
             frm.Rafraichir();
             this.Dispose();
         }
@@ -53,6 +68,52 @@ namespace FonctionAmelioration
         private void frmOption_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.Dispose();
+        }
+
+        private void nmUpXmin_ValueChanged(object sender, EventArgs e)
+        {
+            tmpxmin = Convert.ToDouble(nmUpXmin.Value);
+            CalculNewDeltaY();
+        }
+
+        private void nmUpXmax_ValueChanged(object sender, EventArgs e)
+        {
+            tmpxmax = Convert.ToDouble(nmUpXmax.Value);
+            CalculNewDeltaY();
+
+        }
+
+        private void CalculNewDeltaY()
+        {
+            deltayOld = Math.Abs(Option.YmaxOld - Option.YminOld);
+            deltaxOld = Math.Abs(Option.XmaxOld - Option.XminOld);
+            coefZoomy = deltaxOld / Math.Abs(tmpxmax - tmpxmin);
+            deltax = Math.Round(deltayOld / coefZoomy);
+            tmpymin = Math.Round((tmpymin + tmpymax) / 2 - deltax / 2);
+            tmpymax = Math.Round((tmpymin + tmpymax) / 2 + deltax / 2);
+         }
+
+
+        private void nmUpYmin_ValueChanged(object sender, EventArgs e)
+        {
+            tmpymin = Convert.ToDouble(nmUpYmin.Value);
+            CalculNewDeltaX();
+        }
+
+        private void CalculNewDeltaX()
+        {
+            deltaxOld = Math.Abs(Option.XmaxOld - Option.XminOld);
+            deltayOld = Math.Abs(Option.YmaxOld - Option.YminOld);
+            coefZoomx = deltayOld / Math.Abs(tmpymax - tmpymin);
+            deltay = Math.Round(deltaxOld / coefZoomx);
+            tmpxmin = Math.Round((tmpxmin + tmpxmax) / 2 - deltay / 2);
+            tmpxmax = Math.Round((tmpxmin + tmpxmax) / 2 + deltay / 2);
+        }
+
+        private void nmUpYmax_ValueChanged(object sender, EventArgs e)
+        {
+            tmpymax = Convert.ToDouble(nmUpYmax.Value);
+            CalculNewDeltaX();
         }
 
         private void btnReinitialiser_Click(object sender, EventArgs e)
