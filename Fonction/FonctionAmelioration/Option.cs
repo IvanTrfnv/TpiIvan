@@ -56,7 +56,7 @@ namespace FonctionAmelioration
 
             set
             {
-                xminOld = xmin;
+                xminOld = Xmax;
                 xmin = value;
             }
         }
@@ -70,7 +70,7 @@ namespace FonctionAmelioration
 
             set
             {
-                xmaxOld = xmax;
+                xmaxOld = xmin;
                 xmax = value;
             }
         }

@@ -44,7 +44,7 @@ namespace FonctionAmelioration
             double start_y = ymin;
             gr.DrawLine(graphPen, 0, (float)ymin, 0, (float)ymax);
             float dx = (float)((xmax - xmin) / 120.0);
-            double nbGradY = Math.Max(NbGrad(ymin),NbGrad(ymax));
+            double nbGradY = NbGrad(ymin);
             for (double y = start_y; y < 0; y += Math.Abs(nbGradY))
             {
                 gr.DrawLine(graphPen, -2 * dx, (float)y, 2 * dx, (float)y);

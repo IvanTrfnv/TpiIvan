@@ -27,12 +27,7 @@ namespace FonctionAmelioration
         private double xmax;
         private double ymin;
         private double ymax;
-        //private double deltax;
-        //private double deltay;
-        //private double deltaxOld;
-        //private double deltayOld;
-        //private double coefZoomx;
-        //private double coefZoomy;
+ 
         float zoomX;
         float zoomY;
 
@@ -50,8 +45,7 @@ namespace FonctionAmelioration
             xmax = Option.Xmax;
             ymin = Option.Ymin;
             ymax = Option.Ymax;
-            //deltaxOld = Math.Abs(xmax - xmin);
-            //deltayOld = Math.Abs(ymax - ymin);
+
             zoomX = Convert.ToInt32(Math.Round(Convert.ToDouble(xmin)));
             zoomY = Convert.ToInt32(Math.Round(Convert.ToDouble(ymin)));
         }
