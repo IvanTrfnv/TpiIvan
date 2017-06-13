@@ -45,8 +45,8 @@ namespace FonctionAmelioration
             nmUpYmin.Value = Convert.ToDecimal(Option.Ymin);
             nmUpYmax.Value = Convert.ToDecimal(Option.Ymax);
             tmpxmin = Option.Xmin; 
-            tmpxmax =Option.Xmax; 
-            tmpymin =Option.Ymin; 
+            tmpxmax = Option.Xmax; 
+            tmpymin = Option.Ymin; 
             tmpymax = Option.Ymax;
             nmUpParamK.Value = Option.ParamK;
             nmUpparamKMax.Value = Option.ParamKMax;
@@ -124,12 +124,13 @@ namespace FonctionAmelioration
                 Option.Xmax = 5;
                 Option.Ymin = -5;
                 Option.Ymax = 5;
-                Option.PrecisionCalcul = Convert.ToInt32(nmUpPrecisionCalcul.Value) * 10;
+                Option.PrecisionCalcul = 100;
                 fct1.Text = "";
                 fct2.Text = "";
                 chk.Checked = false;
                 InisialisationComposent();
                 frm.Rafraichir();
+                this.Dispose();
             }
 
         }

@@ -11,37 +11,37 @@ namespace FonctionAmelioration
     {
         static int[]  tableauNombre = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-        public static string equation(string equationUtilisateur)
+        public static string TraitementEquation(string equation)
         {
-            for (int i = 0; i < equationUtilisateur.Length; i++)
+            for (int i = 0; i < equation.Length; i++)
             {
-                if (equationUtilisateur[i] == 'x' || equationUtilisateur[i] == 'y')
+                if (equation[i] == 'x' || equation[i] == 'y')
                 {
                     foreach (int nombre in tableauNombre)
                     {
                             //éviter un exception de type IndexOutOfRangeException et regarde si il y a un nombre avant et après 
-                            if (i>0  && (equationUtilisateur[i - 1].ToString() == nombre.ToString()))
+                            if (i>0  && (equation[i - 1].ToString() == nombre.ToString()))
                             {
-                                //CODE pour ajouter le fois pour que le code pussie écrire 3x en 3*x et ou x est une variable réel
-                                equationUtilisateur =  equationUtilisateur.Insert(i, "*");
+                            //CODE pour ajouter le fois pour que le code pussie écrire 3x en 3*x et ou x est une variable réel
+                            equation = equation.Insert(i, "*");
                             }
 
 
-                            if ((i + 1) < equationUtilisateur.Length)
+                            if ((i + 1) < equation.Length)
                             {
                                 //éviter un exception de type IndexOutOfRangeException et regarde si il y a un nombre avant et après 
-                                if (equationUtilisateur[i + 1].ToString() == nombre.ToString())
+                                if (equation[i + 1].ToString() == nombre.ToString())
                                 {
-                                    //CODE pour ajouter le fois pour que le code pussie écrire x3 en x*3 et ou x est une variable réel
-                                    equationUtilisateur = equationUtilisateur.Insert((i + 1), "*");
+                                //CODE pour ajouter le fois pour que le code pussie écrire x3 en x*3 et ou x est une variable réel
+                                equation = equation.Insert((i + 1), "*");
                                 }
                             }
                     }
                 }
             }
-            if (equationUtilisateur == "")
-                equationUtilisateur = "0";
-            return equationUtilisateur;
+            if (equation == "")
+                equation = "0";
+            return equation;
         }
 
     }

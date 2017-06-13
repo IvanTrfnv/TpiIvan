@@ -56,16 +56,19 @@ namespace FonctionAmelioration
         }
 
         /// <summary>
-        /// 
+        /// Calcul tous les points d'une équation cartésienne affine
         /// </summary>
-        /// <returns>Retourn une liste avec les points X et Y de la droite</returns>
+        /// <param name="xmin">bord gauche en x du rectangle/carré</param>
+        /// <param name="xmax">bord droit en x du rectangle/carré</param>
+        /// <param name="dx">distance entre deux pixels (plus le nombre est petit plus la précision est meilleure)</param>
+        /// <returns>Retourne une liste avec les points X et Y de la courbe</returns>
         public List<PointF> PointXYEquation(double xmin, double xmax, float dx)
         {
             List<PointF> XY = new List<PointF>();
             for (float x = (float)xmin; x <= xmax; x += dx)
             {
                 float y = Convert.ToSingle(Calculate(Equation,x));
-
+                // vérifie si le résultat donne un nombre et est différent de zéro
                 if (!(double.IsNaN(y)) && (y != 0))
                 {
                     XY.Add(new PointF(x, -y));
@@ -75,9 +78,13 @@ namespace FonctionAmelioration
         }
 
         /// <summary>
-        /// 
+        /// Calcul tous les points d'une équation cartésienne affine avec le paramètre y 
         /// </summary>
-        /// <returns>Retourn une liste avec les points X et Y de la droite</returns>
+        /// <param name="xmin">>bord gauche en x du rectangle/carré</param>
+        /// <param name="xmax">bord droit en x du rectangle/carré</param>
+        /// <param name="dx">distance entre deux pixels (plus le nombre est petit plus la précision est meilleure)</param>
+        /// <param name="paramY">nombre dans la équation semblable à x </param>
+        /// <returns>Retourne une liste avec les points X et Y de la courbe</returns>
         public List<PointF> PointXYEquation(double xmin, double xmax, float dx, float paramY)
         {
             List<PointF> XY = new List<PointF>();

@@ -9,7 +9,7 @@ namespace FonctionAmelioration
 {
     public static class Dessin
     {
-        public static void Dessiner(Graphics gr, Pen penfct, List<PointF> points, double ymin, double ymax)
+        public static void Dessiner(Graphics gr, Pen pinceaufct, List<PointF> points, double ymin, double ymax)
         {
             if (points.Count > 0)
             {
@@ -35,7 +35,7 @@ namespace FonctionAmelioration
                     if (item.Count != 0)
                     {
                         if (item.Count > 1)
-                            gr.DrawLines(penfct, item.ToArray());
+                            gr.DrawLines(pinceaufct, item.ToArray());
                     }
                 }
             }
